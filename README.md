@@ -1,37 +1,17 @@
 # Rss Feeds plugin for Craft CMS 3.x
 
-RSS feed from rss.app
+Working with rss feed from rss.app
+(Single, multiple feeds are supported as well as bundles)
 
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0-beta.23 or later.
 
-## Installation
-
-To install the plugin, follow these instructions.
-
-1. Open your terminal and go to your Craft project:
-
-        cd /path/to/project
-
-2. Then tell Composer to load the plugin:
-
-        composer require agencyleroy/rss-feeds
-
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Rss Feeds.
-
-## Rss Feeds Overview
-
--Insert text here-
-
-## Configuring Rss Feeds
-
--Insert text here-
-
 ## Using Rss Feeds
 
 
 ### Individual feed
+```twig
 <pre>
   {% for item in craft.rssFeeds.findFeed('instagram') %}
     {{ item.serviceName }}
@@ -59,11 +39,14 @@ To install the plugin, follow these instructions.
   {{ item.feedImage }}
 {% endfor %}
 </pre>
+```
 
-## Rss Feeds Roadmap
+## Installation with Composer
 
-Some things to do, and ideas for potential features:
+Install the plugin by running:
 
-* Release it
+```console
+foo@bar:~$ composer require agencyleroy/craft-kint
+```
 
 Brought to you by [Agency leroy](https://agencyleroy.com)
