@@ -10,10 +10,6 @@
         "craft-plugin",
         "rss feeds"
     ],
-    "support": {
-        "docs": "???",
-        "issues": "???"
-    },
     "license": "MIT",
     "authors": [
         {
