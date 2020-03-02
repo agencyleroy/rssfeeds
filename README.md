@@ -1,4 +1,5 @@
-# Rss Feeds plugin for Craft CMS 3.x
+# Rss Feeds
+## Rss Feeds plugin for Craft CMS 3.x
 
 Working with rss feed from rss.app
 (Single, multiple feeds are supported as well as bundles)
