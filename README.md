@@ -10,7 +10,7 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
 ## Using Rss Feeds
 
 
-### Individual feed
+### How to find individual feeds
 ```twig
 <pre>
   {% for item in craft.rssFeeds.findFeed('instagram') %}
@@ -24,8 +24,10 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
     {{ item.feedImage }}
   {% endfor %}
 </pre>
+```
 
-### All enabled feed
+### How to find all enabled feed
+```twig
 <pre>
 {% set feeds = craft.rssFeeds.findFeed() %}
 {% for item in feeds %}
