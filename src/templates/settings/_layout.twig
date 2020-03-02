@@ -1,0 +1,41 @@
+
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("agencyleroy\\rssfeeds\\assetbundles\\rssfeeds\\RssFeedsAsset") %}
+{% do view.registerAssetBundle("agencyleroy\\rssfeeds\\assetbundles\\indexcpsection\\IndexCPSectionAsset") %}
+
+{% set docsUrl = "???" %}
+
+{% set title = "Rss Feeds" %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block contextMenu %}
+    {% if craft.app.getIsMultiSite() %}
+        {% set urlFormat = url("rss-feeds/site/{handle}") %}
+        {% include "rss-feeds/settings/_includes/sitemenu.twig" with {
+            urlFormat: urlFormat
+        }  %}
+    {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+    <nav>
+        <ul>
+            <li class="heading"><span>{{ "Information"|t('rss-feeds') }}</span></li>
+            <li><a href="{{ cpUrl() }}/rss-feeds"{{ currentPage == 'readme' ? ' class="sel"' : ''}}>{{ "Readme"|t('rss-feeds') }}</a></li>
+            <li class="heading"><span>{{ "Settings"|t('rss-feeds') }}</span></li>
+            <li><a href="{{ cpUrl() }}/rss-feeds/site/{{ currentSiteHandle }}"{{ currentPage == 'site' ? ' class="sel"' : ''}}>{{ "Site Settings"|t('rss-feeds') }}</a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block actionButton %}
+    <div class="buttons">
+        <button type="submit" class="btn submit">{{ "Save"|t }}</button>
+    </div>
+{% endblock %}

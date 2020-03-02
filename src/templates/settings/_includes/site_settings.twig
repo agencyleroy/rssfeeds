@@ -1,0 +1,56 @@
+{% import "_includes/forms" as forms %}
+
+<input type="hidden" name="action" value="rss-feeds/settings/save-site-settings">
+<input type="hidden" name="site_id" value="{{ currentSiteId }}">
+
+{{ csrfInput() }}
+
+{{ forms.lightswitchField({
+    label: model.getAttributeLabel('activated'),
+    instructions: 'Enable fetching RSS feed'|t('rss-feeds'),
+    name: "activated",
+    disabled: not canActivate,
+    on: model.activated,
+    errors: model.getErrors("activated"),
+}) }}
+
+{{ forms.editableTable({
+    label: model.getAttributeLabel('feedUrls'),
+    instructions: 'URL to rss feed (XML)'|t('rss-feeds'),
+    id: "feedUrls",
+    name: "feedUrls",
+    disabled: not canChangeFeedUrls,
+    value: model.feedUrls,
+    minRows: 1,
+    defaultValues: {
+        name: "",
+        url: "",
+    },
+    cols: {
+        name: {
+            heading: "Feed type"|t("rss-feeds"),
+            type: "select",
+            width: "30%",
+            code: true,
+            options: {
+              'instagram': 'Instagram',
+              'facebook': 'Facebook',
+              'twitter': 'Twitter',
+              'bundle': 'Bundle'
+            }
+        },
+        url: {
+            heading: "Feed url"|t("rss-feeds"),
+            type: "singleline",
+            width: "100%",
+            code: true,
+        },
+        activated: {
+            heading: "Activated"|t("rss-feeds"),
+            type: "lightswitch",
+            width: "20%",
+        }
+    },
+    rows: model.feedUrls | json_decode,
+    errors: model.getErrors("feedUrls"),
+  }) }}

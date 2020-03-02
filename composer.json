@@ -1,0 +1,43 @@
+{
+    "name": "agencyleroy/rss-feeds",
+    "description": "RSS feed from rss.app",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "rss feeds"
+    ],
+    "support": {
+        "docs": "???",
+        "issues": "???"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Agency leroy",
+            "homepage": "https://agencyleroy.com"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "agencyleroy\\rssfeeds\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Rss Feeds",
+        "handle": "rss-feeds",
+        "hasCpSettings": true,
+        "hasCpSection": true,
+        "changelogUrl": "???",
+        "components": {
+            "rssFeedsService": "agencyleroy\\rssfeeds\\services\\RssFeedsService"
+        },
+        "class": "agencyleroy\\rssfeeds\\RssFeeds"
+    }
+}
