@@ -48,7 +48,7 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
 Install the plugin by running:
 
 ```console
-foo@bar:~$ composer require agencyleroy/craft-kint
+foo@bar:~$ composer require agencyleroy/rss-feeds
 ```
 
 Brought to you by [Agency leroy](https://agencyleroy.com)
