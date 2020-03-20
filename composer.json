@@ -2,7 +2,7 @@
     "name": "agencyleroy/rss-feeds",
     "description": "RSS feed from rss.app",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": [
         "craft",
         "cms",
@@ -30,7 +30,6 @@
         "handle": "rss-feeds",
         "hasCpSettings": true,
         "hasCpSection": true,
-        "changelogUrl": "???",
         "components": {
             "rssFeedsService": "agencyleroy\\rssfeeds\\services\\RssFeedsService"
         },
