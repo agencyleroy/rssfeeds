@@ -40,8 +40,8 @@ class RssFeedsService extends Component
     {
       $this->currentSiteId = Craft::$app->getSites()->currentSite->id;
       $this->settings = SiteSettings::find()->where(['site_id' => $this->currentSiteId])->one();
-      $this->activated = $this->settings->activated;
       if($this->settings) {
+        $this->activated = $this->settings->activated;
         $this->feedUrls = json_decode($this->settings->feedUrls);
       }
       parent::init();
