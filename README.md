@@ -10,9 +10,31 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
 
 ## Using Rss Feeds
 
+1. Create a feed in <a href="https://rss.app/" target="_blank">rss.app</a>. Adjust the feed settings if needed.
+2. Copy the Feed Url.
+3. In the plugin settings, you can
+  1. Activate/Deactivate the whole feed
+  2. Add multiple feeds in the table
+    - Feed type: Choose what services the feed is getting data from. This should be the same as the one in rss.app. If you want to get a feed from the multiple service providers, Make a feed on rss.app with bundle type.
+    - Feed Url: The feed's url from rss.app
+    - Activate/Deactivate the selected row
 
+## Available functions
+- findFeed($serviceName = null): Returns an array of the feed items. Service provider can be specified in the parameter which should be chosen from the feed type. Default is null.
+  #### 
+  - serviceName: Displays the service provider's name
+  - authorTitle: Displays the author's title. This can be changes in rss.app
+  - authorLink: Link to the author's feed in the provider
+  - feedTitle: Displays the title or the description of the feed item
+  - feedLink: Link to the feed item
+  - feedPubDate: Datetime object of the time when the feed item is published.
+  - timestamp: Timestamp of when the feed item is published
+  - feedImage: Url of the image in the feed item
+- isActive(): Returns boolean; whether the whole feed is activated.
+
+## Twig code examples
 ### How to find individual feeds
-```twig
+```
 <pre>
   {% for item in craft.rssFeeds.findFeed('instagram') %}
     {{ item.serviceName }}
@@ -20,7 +42,7 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
     {{ item.authorLink }}
     {{ item.feedTitle }}
     {{ item.feedLink }}
-    {{ item.feedPubDate }}
+    {{ item.feedPubDate|date('d.m.y') }}
     {{ item.timestamp }}
     {{ item.feedImage }}
   {% endfor %}
@@ -28,18 +50,11 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
 ```
 
 ### How to find all enabled feed
-```twig
+```
 <pre>
 {% set feeds = craft.rssFeeds.findFeed() %}
 {% for item in feeds %}
-  {{ item.serviceName }}
-  {{ item.authorTitle }}
-  {{ item.authorLink }}
-  {{ item.feedTitle }}
-  {{ item.feedLink }}
-  {{ item.feedPubDate }}
-  {{ item.timestamp }}
-  {{ item.feedImage }}
+  ...
 {% endfor %}
 </pre>
 ```

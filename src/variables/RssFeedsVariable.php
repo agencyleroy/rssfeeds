@@ -63,4 +63,8 @@ class RssFeedsVariable
   {
       return Json::decodeIfJson(RssFeeds::getInstance()->rssFeedsService->findFeed($serviceName));
   }
+  public function isActive()
+  {
+      return Json::decodeIfJson(RssFeeds::getInstance()->rssFeedsService->isActive());
+  }
 }

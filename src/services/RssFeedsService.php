@@ -46,6 +46,11 @@ class RssFeedsService extends Component
       }
       parent::init();
     }
+
+    public function isActive()
+    {
+      return $this->activated;
+    }
     
     public function findFeed($serviceName = null)
     {
