@@ -21,7 +21,7 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
 
 ## Available functions
 - findFeed($serviceName = null): Returns an array of the feed items. Service provider can be specified in the parameter which should be chosen from the feed type. Default is null.
-  #### 
+  #### Available Properties
   - serviceName: Displays the service provider's name
   - authorTitle: Displays the author's title. This can be changes in rss.app
   - authorLink: Link to the author's feed in the provider
