@@ -72,9 +72,12 @@ class SettingsController extends Controller
 			throw new NotFoundHttpException('Settings for site not found');
 		}
 		$record->load(Craft::$app->request->post(), '');
-		$record->activated = (int) $record->activated;
+    $record->activated = (int) $record->activated;
+    $record->feedUrls = json_encode($record->feedUrls);
+    
 		if($record->save()) {
 			Craft::$app->getSession()->setNotice(Craft::t('rss-feeds', 'Settings saved.'));
+      return $this->redirectToPostedUrl();
 		}
 		else {
 			Craft::$app->getUrlManager()->setRouteParams([
@@ -171,14 +174,11 @@ class SettingsController extends Controller
 	 */
 	private function _checkSiteEditPermission(int $siteId)
 	{
-		if (Craft::$app->getIsMultiSite()) {
+    $variables['editableSites'] = Craft::$app->getSites()->getEditableSiteIds();
 
-			$variables['editableSites'] = Craft::$app->getSites()->getEditableSiteIds();
-
-			if (!\in_array($siteId, $variables['editableSites'], false)) {
-					$this->requirePermission('editSite:'.$siteId);
-			}
-		}
+    if (!\in_array($siteId, $variables['editableSites'], false)) {
+        $this->requirePermission('editSite:'.$siteId);
+    }
 	}
 
 	private function _prepSiteSettingsPermissionVariables(array &$variables)
