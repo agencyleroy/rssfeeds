@@ -59,7 +59,7 @@ class RssFeedsVariable
     </pre>
 
    */
-  public function findFeed($serviceName)
+  public function findFeed($serviceName = null)
   {
       return Json::decodeIfJson(RssFeeds::getInstance()->rssFeedsService->findFeed($serviceName));
   }
