@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2020 Agency leroy
  */
 
-namespace agencyleroy\rssfeeds\assetbundles\RssFeeds;
+namespace agencyleroy\rssfeeds\assetbundles\rssfeeds;
 
 use Craft;
 use craft\web\AssetBundle;
