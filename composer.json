@@ -28,8 +28,6 @@
     "extra": {
         "name": "Rss Feeds",
         "handle": "rss-feeds",
-        "hasCpSettings": true,
-        "hasCpSection": true,
         "components": {
             "rssFeedsService": "agencyleroy\\rssfeeds\\services\\RssFeedsService"
         },

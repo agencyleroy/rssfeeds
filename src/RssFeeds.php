@@ -51,6 +51,16 @@ class RssFeeds extends Plugin
      */
     public $schemaVersion = '1.0.0';
 
+    /**
+     * @inheritdoc
+     */
+    public $hasCpSettings = false;
+
+    /**
+     * @inheritdoc
+     */
+    public $hasCpSection = true;
+
     // Constants
     // =========================================================================
 
@@ -58,7 +68,7 @@ class RssFeeds extends Plugin
      * Plugin name
      */
     const PLUGIN_NAME = 'Rss feeds';
-    
+
     /**
      * Database Table name for SiteSettings records
      */
@@ -115,28 +125,6 @@ class RssFeeds extends Plugin
     // =========================================================================
 
     /**
-     * @inheritdoc
-     */
-    protected function createSettingsModel()
-    {
-        return new Settings();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function settingsHtml(): string
-    {
-        return Craft::$app->view->renderTemplate(
-            'rss-feeds/settings',
-            [
-                'settings' => $this->getSettings()
-            ]
-        );
-    }
-
-
-    /**
      * Install CP Event Listeners
      */
     protected function installCpEventListeners()
@@ -162,8 +150,8 @@ class RssFeeds extends Plugin
     protected function customAdminCpRoutes(): array
     {
       return [
-        'rss-feeds' 													=>	'rss-feeds/settings/index',
-        'rss-feeds/site/<siteHandle:{handle}>'							=> 	'rss-feeds/settings/edit-site-settings',
+        'rss-feeds'                             => 'rss-feeds/settings/index',
+        'rss-feeds/site/<siteHandle:{handle}>'	=> 'rss-feeds/settings/edit-site-settings',
       ];
     }
 }
