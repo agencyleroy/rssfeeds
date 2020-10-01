@@ -18,6 +18,7 @@ use agencyleroy\rssfeeds\records\SiteSettings;
 use Craft;
 use craft\base\Component;
 use craft\helpers\Json;
+use craft\helpers\ArrayHelper;
 
 /**
  * @author    Agency leroy
@@ -42,7 +43,7 @@ class RssFeedsService extends Component
       $this->settings = SiteSettings::find()->where(['site_id' => $this->currentSiteId])->one();
       if($this->settings) {
         $this->activated = $this->settings->activated;
-        $this->feedUrls = json_decode($this->settings->feedUrls);
+        $this->feedUrls = Json::decode($this->settings->feedUrls);
       }
       parent::init();
     }
@@ -51,7 +52,7 @@ class RssFeedsService extends Component
     {
       return $this->activated;
     }
-    
+
     public function findFeed($serviceName = null)
     {
       if(!$this->activated) {
@@ -61,17 +62,17 @@ class RssFeedsService extends Component
       $feeds = $this->feedUrls;
       $selectedFeeds = [];
 
-      if($serviceName !== null) {
+      if ($serviceName !== null) {
         //If services is defined
-        $key = array_search($serviceName, array_column($feeds, 'name'));
-        $selectedFeed = $feeds[$key];
-        if($selectedFeed->activated) {
-          $selectedFeeds[$serviceName] = $feeds[$key];
+        $selectedFeed = ArrayHelper::firstWhere($feeds, 'name', $serviceName);
+
+        if ($selectedFeed && $selectedFeed['activated']) {
+          $selectedFeeds[$serviceName] = $selectedFeed;
         }
       } else {
         foreach ($feeds as $i => $feed) {
-          if($feed->activated) {
-            $selectedFeeds[$feed->name] = $feed;
+          if ($feed['activated']) {
+            $selectedFeeds[$feed['name']] = $feed;
           }
         }
       }
@@ -101,10 +102,10 @@ class RssFeedsService extends Component
     {
       $feedItems = [];
       foreach ($selectedFeeds as $i => $selectedFeed) {
-        $serviceName = $selectedFeed -> name;
-        $url = $selectedFeed -> url;
+        $serviceName = $selectedFeed['name'];
+        $url = $selectedFeed['url'];
         $xml = simplexml_load_file($url, 'SimpleXMLElement', LIBXML_NOCDATA);
-  
+
         $channel = $xml->channel[0];
         // $xml = simplexml_load_string($xml_string);
         $json = Json::decodeIfJson(json_encode($channel));
@@ -121,7 +122,7 @@ class RssFeedsService extends Component
               preg_match($pattern, $item['link'], $matches);
 
               $feedServiceName = sizeof($matches) > 0 ? $matches[2] : '';
-              
+
               $authorTitle = strip_tags($channel->item[$j]->children("dc", true)->asXML());
               $authorLink = '';
             } else {
