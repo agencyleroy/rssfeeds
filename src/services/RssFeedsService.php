@@ -53,6 +53,23 @@ class RssFeedsService extends Component
       return $this->activated;
     }
 
+    /**
+     * @return FormModel[]
+     */
+    public function getAllFeeds(): array
+    {
+	$feeds = $this->feedUrls;
+	$selectedFeeds = [];
+	
+	foreach ($feeds as $i => $feed) {
+		if ($feed['activated']) {
+		$selectedFeeds[$feed['name']] = $feed;
+		}
+	}
+
+        return $selectedFeeds;
+    }
+
     public function findFeed($serviceName = null)
     {
       if(!$this->activated) {
