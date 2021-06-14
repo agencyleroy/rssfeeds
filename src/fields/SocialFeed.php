@@ -326,15 +326,15 @@ class SocialFeed extends Field
         $feeds = RssFeeds::getInstance()->rssFeedsService->getAllFeeds();
 
         $feedOptions = [
-	    '' => Craft::t('rss-feeds', 'Select a feed'),
-	];
+            '' => Craft::t('rss-feeds', 'Select a feed'),
+        ];
 
         /** @var RssFeedsModel $form */
-        foreach ($feeds as $feed) {
+        foreach ($feeds as $i => $feed) {
             if (\is_array($feed)) {
-                $feedOptions[$feed['name']] = $feed['name'];
+                $feedOptions[$feed['url']] = $feed['url'];
             } else if ($feed instanceof RssFeedsModel) {
-                $feedOptions[$feed->name] = $feed->name;
+                $feedOptions[$feed->url] = $feed->url;
             }
         }
 

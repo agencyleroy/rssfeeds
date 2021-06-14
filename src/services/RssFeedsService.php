@@ -58,14 +58,14 @@ class RssFeedsService extends Component
      */
     public function getAllFeeds(): array
     {
-	$feeds = $this->feedUrls;
-	$selectedFeeds = [];
-	
-	foreach ($feeds as $i => $feed) {
-		if ($feed['activated']) {
-		$selectedFeeds[$feed['name']] = $feed;
-		}
-	}
+        $feeds = $this->feedUrls;
+        $selectedFeeds = [];
+        
+        foreach ($feeds as $i => $feed) {
+          if ($feed['activated']) {
+            $selectedFeeds[$feed['url']] = $feed;
+          }
+        }
 
         return $selectedFeeds;
     }
