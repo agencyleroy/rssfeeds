@@ -19,6 +19,11 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
     - Feed Url: The feed's url from rss.app
     - Activate/Deactivate the selected row
 
+### To select an individual feed
+4. Create a field from `/admin/settings/fields` with `socialFeed` field type
+5. Select a feed to display in the frontend
+6. `{% set feed = craft.rssFeeds.findFeedByUrl(entry.feed) %}` to get the type of the feed and the array of the feed
+
 ## Available functions
 - findFeed($serviceName = null): Returns an array of the feed items. Service provider can be specified in the parameter which should be chosen from the feed type. Default is null.
   #### Available Properties
@@ -45,6 +50,23 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
     {{ item.feedPubDate|date('d.m.y') }}
     {{ item.timestamp }}
     {{ item.feedImage }}
+  {% endfor %}
+</pre>
+```
+
+### After creating the socialFeed field type and fetching the details on the frontend(Twig)
+```
+<pre>
+  {% set socialfeed = craft.rssFeeds.findFeedByUrl(entry.feed) %}
+  {% set feedArray = socialfeed.feed|slice(0,4) %}
+  {% for feed in feedArray %}
+    {% if feed.type == 'twitter' %}
+      {# Frontend code for twitter feed #}
+    {% else if feed.type == 'intagram' %}
+      {# Frontend code for instagram feed #}
+    {% else %}
+      {# Frontend code for default feed #}
+    {% endif %}
   {% endfor %}
 </pre>
 ```

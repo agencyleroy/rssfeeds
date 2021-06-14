@@ -16,3 +16,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### New variable
 - Setting a feed only with selected service name is now possible: findFeed('instagram')
 - Checking if the feed is activated from the plugin by using: isActive()
+
+## 1.1.0 - 2021-06-14
+### Update
+- Multiple feed with the same feed type is available
+- Create its its own field with SocialFeed type from fields
+- Select a feed to display from the field ({% set feed = craft.rssFeeds.findFeedByUrl(entry.feed) %})
