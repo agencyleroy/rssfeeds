@@ -352,7 +352,6 @@ class SocialFeed extends Field
                 'id' => $id,
                 'namespacedId' => $namespacedId,
                 'feedOptions'  => $feedOptions,
-                'selectedFeed' => $value instanceof Form ? $value->getId() : null,
             ]
         );
     }

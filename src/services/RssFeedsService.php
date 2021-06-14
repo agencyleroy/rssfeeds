@@ -70,6 +70,42 @@ class RssFeedsService extends Component
         return $selectedFeeds;
     }
 
+    public function findFeedByUrl($feedUrl)
+    {
+      if(!$this->activated) {
+        return null;
+      }
+
+      $feeds = $this->feedUrls;
+      $selectedFeeds = [];
+
+      $selectedFeed = ArrayHelper::firstWhere($feeds, 'url', $feedUrl);
+
+      if ($selectedFeed && $selectedFeed['activated']) {
+        $selectedFeeds[$selectedFeed['name']] = $selectedFeed;
+      }
+
+      $handles = array_column($selectedFeeds, 'name');
+      $feedHandle = 'feed-'.$this->currentSiteId.'-'.implode('_', $handles);
+      $data = Craft::$app->cache->get($feedHandle);
+      // $data = '';
+
+      if (!$data) {
+        if ($data = $this->_fetchFeed($selectedFeeds)) {
+          if (!Craft::$app->cache->set($feedHandle, $data,  1440 )) {
+            Craft::error("Could not write to cache");
+          }
+          return $data;
+        }
+        return null;
+      }
+
+      $feedDetail['type'] = $selectedFeed['name'];
+      $feedDetail['feed'] = $data;
+
+      return $feedDetail;
+    }
+
     public function findFeed($serviceName = null)
     {
       if(!$this->activated) {
