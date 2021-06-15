@@ -37,9 +37,15 @@ class m200930_132634_convert_feed_urls extends Migration
         return false;
     }
 
+    private static function isJsonObject(string $str): bool
+    {
+        return (bool)preg_match('/^(?:\{.*\}|\[.*\])$/s', $str);
+    }
+
+
     private static function convertToArray($feedUrls)
     {
-        if (!Json::isJsonObject($feedUrls)) {
+        if (!self::isJsonObject($feedUrls)) {
             $feedUrls = Json::decode($feedUrls);
             self::convertToArray($feedUrls);
         }
