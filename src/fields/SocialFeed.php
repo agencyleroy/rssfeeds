@@ -332,9 +332,9 @@ class SocialFeed extends Field
         /** @var RssFeedsModel $form */
         foreach ($feeds as $i => $feed) {
             if (\is_array($feed)) {
-                $feedOptions[$feed['url']] = $feed['url'];
+                $feedOptions[$feed['url']] = '['.$feed['name'].'] '.$feed['url'];
             } else if ($feed instanceof RssFeedsModel) {
-                $feedOptions[$feed->url] = $feed->url;
+                $feedOptions[$feed->url] = '['.$feed->name.'] '.$feed->url;
             }
         }
 
