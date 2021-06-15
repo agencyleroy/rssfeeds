@@ -47,7 +47,7 @@ class m200930_132634_convert_feed_urls extends Migration
 
     private static function convertToArray($feedUrls)
     {
-        if (!self::isJsonObject($feedUrls)) {
+        if (!!$feedUrls && !self::isJsonObject($feedUrls)) {
             $feedUrls = Json::decode($feedUrls);
             self::convertToArray($feedUrls);
         }
