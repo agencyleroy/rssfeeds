@@ -21,7 +21,9 @@ class m200930_132634_convert_feed_urls extends Migration
 
         foreach ($siteSettings as $siteSetting) {
             $feedUrls = $siteSetting->feedUrls;
-            $feedUrls = self::convertToArray($feedUrls);
+            if(!!$feedUrls) {
+                $feedUrls = self::convertToArray($feedUrls);
+            }
 
             $siteSetting->feedUrls = $feedUrls;
             $siteSetting->save();
