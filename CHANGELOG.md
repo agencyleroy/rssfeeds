@@ -22,3 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Multiple feed with the same feed type is available
 - Create its its own field with SocialFeed type from fields
 - Select a feed to display from the field ({% set feed = craft.rssFeeds.findFeedByUrl(entry.feed) %})
+
+## 1.1.2 - 2021-06-15
+### Update
+- Fix small bugs
