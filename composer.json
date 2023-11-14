@@ -32,10 +32,5 @@
             "rssFeedsService": "agencyleroy\\rssfeeds\\services\\RssFeedsService"
         },
         "class": "agencyleroy\\rssfeeds\\RssFeeds"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require-dev": {
-        "craftcms/rector": "dev-main"
     }
 }
