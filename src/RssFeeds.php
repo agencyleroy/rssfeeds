@@ -52,17 +52,17 @@ class RssFeeds extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.1';
+    public string $schemaVersion = '1.0.1';
 
     /**
      * @inheritdoc
      */
-    public $hasCpSettings = false;
+    public bool $hasCpSettings = false;
 
     /**
      * @inheritdoc
      */
-    public $hasCpSection = true;
+    public bool $hasCpSection = true;
 
     // Constants
     // =========================================================================

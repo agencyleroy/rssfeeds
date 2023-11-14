@@ -37,7 +37,7 @@ class RssFeedsService extends Component
     /**
      * Initiate the plugin for this site
      */
-    public function init()
+    public function init(): void
     {
       $this->currentSiteId = Craft::$app->getSites()->currentSite->id;
       $this->settings = SiteSettings::find()->where(['site_id' => $this->currentSiteId])->one();
