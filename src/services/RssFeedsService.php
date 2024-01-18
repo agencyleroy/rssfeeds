@@ -187,9 +187,9 @@ class RssFeedsService extends Component
             $feedItem->serviceName = $feedServiceName;
             $feedItem->authorTitle = $authorTitle;
             $feedItem->authorLink = $authorLink;
-            $feedItem->feedTitle = $item['title'];
-            $feedItem->feedDescription = $item['description'];
-            $feedItem->feedLink = $item['link'];
+            $feedItem->feedTitle = array_key_exists('title', $item) ? $item['title'] : '';
+            $feedItem->feedDescription = array_key_exists('description', $item) ? $item['description'] : '';
+            $feedItem->feedLink = array_key_exists('link', $item) ? $item['link'] : '';
             $feedItem->feedPubDate = date_create_from_format("D, d M Y H:i:s O", $item['pubDate']);
             $feedItem->timestamp = date_timestamp_get($feedItem->feedPubDate);
             $feedItem->feedImage = isset($item['enclosure']) ? $item['enclosure']['@attributes']['url'] : null;
