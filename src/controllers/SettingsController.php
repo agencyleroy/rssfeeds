@@ -16,7 +16,7 @@ class SettingsController extends Controller
         $variables = [
             'content' => file_get_contents(dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR.'README.md'),
             'currentPage' => 'readme',
-            'site' => Craft::$app->getSites()->currentSite
+            'site' => Craft::$app->getSites()->getCurrentSite()
         ];
         $this->_prepVariables($variables);
         $variables['currentPage'] = 'readme';
@@ -38,7 +38,6 @@ class SettingsController extends Controller
     {
         $this->requirePermission('rss-feeds:site-settings');
 
-        Craft::$app->getRequest();
         $variables = [
             'currentSiteHandle' => $siteHandle,
             'model' => $model
@@ -107,7 +106,11 @@ class SettingsController extends Controller
             }
             $siteId = $site->id;
         } else {
-            $siteId = Craft::$app->getSites()->currentSite->id;
+            $currentSite = Craft::$app->getSites()->getCurrentSite();
+            if ($currentSite === null) {
+                throw new NotFoundHttpException('Unable to determine the current site.');
+            }
+            $siteId = $currentSite->id;
         }
 
         return $siteId;
@@ -134,16 +137,19 @@ class SettingsController extends Controller
      */
     private function _prepVariables(array &$variables)
     {
-        if(empty($variables['currentSiteHandle']))
-        {
-            $variables['site'] = Craft::$app->getSites()->currentSite;
-            $variables['currentSiteId'] = $variables['site']->id;
-            $variables['currentSiteHandle'] = $variables['site']->handle;
+        if (empty($variables['currentSiteHandle'])) {
+            $variables['site'] = Craft::$app->getSites()->getCurrentSite();
         }
         else {
-            $variables['site'] = Craft::$app->sites->getSiteByHandle($variables['currentSiteHandle']);
-            $variables['currentSiteId'] = $variables['site']->id;
+            $variables['site'] = Craft::$app->getSites()->getSiteByHandle($variables['currentSiteHandle']);
         }
+
+        if ($variables['site'] === null) {
+            throw new NotFoundHttpException('Invalid site.');
+        }
+
+        $variables['currentSiteId'] = $variables['site']->id;
+        $variables['currentSiteHandle'] = $variables['site']->handle;
         if (empty($variables['model'])) {
             $variables['model'] = SiteSettings::findOne($variables['currentSiteId']);
 

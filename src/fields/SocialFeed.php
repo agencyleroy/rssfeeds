@@ -12,7 +12,7 @@ namespace agencyleroy\rssfeeds\fields;
 
 use agencyleroy\rssfeeds\RssFeeds;
 use agencyleroy\rssfeeds\assetbundles\socialfeedfield\SocialFeedFieldAsset;
-use agencyleroy\rssfeeds\Models\RssFeedsModel;
+use agencyleroy\rssfeeds\models\RssFeedsModel;
 
 use Craft;
 use craft\base\ElementInterface;

@@ -10,8 +10,6 @@
 
 namespace agencyleroy\rssfeeds\services;
 
-use DateTime;
-use DateTimeZone;
 use agencyleroy\rssfeeds\RssFeeds;
 use agencyleroy\rssfeeds\records\SiteSettings;
 
@@ -27,30 +25,43 @@ use craft\helpers\ArrayHelper;
  */
 class RssFeedsService extends Component
 {
-    // Public Methods
-    // =========================================================================
-    private $settings;
-    private $feedUrls;
-    private $currentSiteId;
-    private $activated;
+    private ?SiteSettings $settings = null;
+    private array $feedUrls = [];
+    private ?int $currentSiteId = null;
+    private bool $activated = false;
 
     /**
      * Initiate the plugin for this site
      */
     public function init(): void
     {
-      $this->currentSiteId = Craft::$app->getSites()->currentSite->id;
-      $this->settings = SiteSettings::find()->where(['site_id' => $this->currentSiteId])->one();
-      if($this->settings) {
-        $this->activated = $this->settings->activated;
-        $this->feedUrls = Json::decode($this->settings->feedUrls);
-      }
-      parent::init();
+        parent::init();
+
+        $currentSite = Craft::$app->getSites()->getCurrentSite();
+
+        if ($currentSite === null) {
+            return;
+        }
+
+        $this->currentSiteId = (int)$currentSite->id;
+        $this->settings = SiteSettings::find()->where(['site_id' => $this->currentSiteId])->one();
+
+        if ($this->settings) {
+            $this->activated = (bool)$this->settings->activated;
+
+            $feedUrls = $this->settings->feedUrls;
+            if (\is_string($feedUrls)) {
+                $decoded = Json::decodeIfJson($feedUrls);
+                $feedUrls = \is_array($decoded) ? $decoded : [];
+            }
+
+            $this->feedUrls = \is_array($feedUrls) ? $feedUrls : [];
+        }
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
-      return $this->activated;
+        return $this->activated;
     }
 
     /**
@@ -58,6 +69,10 @@ class RssFeedsService extends Component
      */
     public function getAllFeeds(): array
     {
+        if (empty($this->feedUrls)) {
+            return [];
+        }
+
         $feeds = $this->feedUrls;
         $selectedFeeds = [];
         
@@ -70,9 +85,9 @@ class RssFeedsService extends Component
         return $selectedFeeds;
     }
 
-    public function findFeedByUrl($feedUrl)
+    public function findFeedByUrl(?string $feedUrl)
     {
-      if(!$this->activated) {
+      if(!$this->activated || $feedUrl === null) {
         return null;
       }
 
@@ -87,12 +102,12 @@ class RssFeedsService extends Component
 
       $handles = array_column($selectedFeeds, 'name');
       $feedHandle = 'feed-'.$this->currentSiteId.'-'.implode('_', $handles);
-      $data = Craft::$app->cache->get($feedHandle);
+      $data = Craft::$app->getCache()->get($feedHandle);
       // $data = '';
 
       if (!$data) {
         if ($data = $this->_fetchFeed($selectedFeeds)) {
-          if (!Craft::$app->cache->set($feedHandle, $data,  1440 )) {
+          if (!Craft::$app->getCache()->set($feedHandle, $data,  1440 )) {
             Craft::error("Could not write to cache");
           }
           return $data;
@@ -106,7 +121,7 @@ class RssFeedsService extends Component
       return $feedDetail;
     }
 
-    public function findFeed($serviceName = null)
+    public function findFeed(?string $serviceName = null)
     {
       if(!$this->activated) {
         return null;
@@ -132,12 +147,12 @@ class RssFeedsService extends Component
 
       $handles = array_column($selectedFeeds, 'name');
       $feedHandle = 'feed-'.$this->currentSiteId.'-'.implode('_', $handles);
-      $data = Craft::$app->cache->get($feedHandle);
+      $data = Craft::$app->getCache()->get($feedHandle);
       // $data = '';
 
       if (!$data) {
         if ($data = $this->_fetchFeed($selectedFeeds)) {
-          if (!Craft::$app->cache->set($feedHandle, $data,  1440 )) {
+          if (!Craft::$app->getCache()->set($feedHandle, $data,  1440 )) {
             Craft::error("Could not write to cache");
           }
           return $data;

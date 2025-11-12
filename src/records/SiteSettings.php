@@ -134,11 +134,15 @@ class SiteSettings extends ActiveRecord
             if (!$site) {
                 throw new NotFoundHttpException('Invalid site ID: '.$siteId);
             }
-            $siteHandle = $site->handle;
-        } else {
-            $siteHandle = Craft::$app->getSites()->currentSite->handle;
+
+            return $site->handle;
         }
 
-        return $siteHandle;
+        $currentSite = Craft::$app->getSites()->getCurrentSite();
+        if ($currentSite === null) {
+            throw new NotFoundHttpException('No current site is available.');
+        }
+
+        return $currentSite->handle;
     }
 }

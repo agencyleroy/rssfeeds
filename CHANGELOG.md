@@ -1,3 +1,9 @@
+## 3.0.0 - 2025-11-12
+### Added
+- Craft CMS 5 and PHP 8.2 compatibility updates.
+- Improved site context detection for multi-site installs.
+- Updated plugin variable registration for Craft 5.
+
 # Rss Feeds Changelog
 
 All notable changes to this project will be documented in this file.

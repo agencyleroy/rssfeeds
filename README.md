@@ -1,12 +1,12 @@
 # Rss Feeds
-## Rss Feeds plugin for Craft CMS 3.x
+## Rss Feeds plugin for Craft CMS 5.x
 
 Working with rss feed from rss.app
 (Single, multiple feeds are supported as well as bundles)
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+This plugin requires Craft CMS 5.0.0 or later and PHP 8.2+.
 
 ## Using Rss Feeds
 

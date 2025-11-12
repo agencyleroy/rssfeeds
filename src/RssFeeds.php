@@ -12,13 +12,13 @@ namespace agencyleroy\rssfeeds;
 
 use agencyleroy\rssfeeds\services\RssFeedsService as RssFeedsServiceService;
 use agencyleroy\rssfeeds\variables\RssFeedsVariable;
-use agencyleroy\rssfeeds\models\Settings;
 use agencyleroy\rssfeeds\fields\SocialFeed as SocialFeedField;
 
 use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
+use craft\events\DefineComponentsEvent;
 use craft\web\UrlManager;
 use craft\web\twig\variables\CraftVariable;
 use craft\events\RegisterUrlRulesEvent;
@@ -41,10 +41,7 @@ class RssFeeds extends Plugin
     // Static Properties
     // =========================================================================
 
-    /**
-     * @var RssFeeds
-     */
-    public static $plugin;
+    public static ?RssFeeds $plugin = null;
 
     // Public Properties
     // =========================================================================
@@ -97,11 +94,9 @@ class RssFeeds extends Plugin
 
         Event::on(
             CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('rssFeeds', RssFeedsVariable::class);
+            CraftVariable::EVENT_DEFINE_COMPONENTS,
+            static function (DefineComponentsEvent $event) {
+                $event->components['rssFeeds'] = RssFeedsVariable::class;
             }
         );
 
