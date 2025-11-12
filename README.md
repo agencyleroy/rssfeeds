@@ -1,4 +1,5 @@
 # Rss Feeds
+
 ## Rss Feeds plugin for Craft CMS 5.x
 
 Working with rss feed from rss.app
@@ -13,18 +14,22 @@ This plugin requires Craft CMS 5.0.0 or later and PHP 8.2+.
 1. Create a feed in <a href="https://rss.app/" target="_blank">rss.app</a>. Adjust the feed settings if needed.
 2. Copy the Feed Url.
 3. In the plugin settings, you can
-  1. Activate/Deactivate the whole feed
-  2. Add multiple feeds in the table
+4. Activate/Deactivate the whole feed
+5. Add multiple feeds in the table
+
+
     - Feed type: Choose what services the feed is getting data from. This should be the same as the one in rss.app. If you want to get a feed from the multiple service providers, Make a feed on rss.app with bundle type.
     - Feed Url: The feed's url from rss.app
     - Activate/Deactivate the selected row
 
 ### To select an individual feed
+
 4. Create a field from `/admin/settings/fields` with `socialFeed` field type
 5. Select a feed to display in the frontend
 6. `{% set feed = craft.rssFeeds.findFeedByUrl(entry.feed) %}` to get the type of the feed and the array of the feed
 
 ## Available functions
+
 - findFeed($serviceName = null): Returns an array of the feed items. Service provider can be specified in the parameter which should be chosen from the feed type. Default is null.
   #### Available Properties
   - serviceName: Displays the service provider's name
@@ -38,7 +43,9 @@ This plugin requires Craft CMS 5.0.0 or later and PHP 8.2+.
 - isActive(): Returns boolean; whether the whole feed is activated.
 
 ## Twig code examples
+
 ### How to find individual feeds
+
 ```
 <pre>
   {% for item in craft.rssFeeds.findFeed('instagram') %}
@@ -55,6 +62,7 @@ This plugin requires Craft CMS 5.0.0 or later and PHP 8.2+.
 ```
 
 ### After creating the socialFeed field type and fetching the details on the frontend(Twig)
+
 ```
 <pre>
   {% set socialfeed = craft.rssFeeds.findFeedByUrl(entry.feed) %}
@@ -72,6 +80,7 @@ This plugin requires Craft CMS 5.0.0 or later and PHP 8.2+.
 ```
 
 ### How to find all enabled feed
+
 ```
 <pre>
 {% set feeds = craft.rssFeeds.findFeed() %}

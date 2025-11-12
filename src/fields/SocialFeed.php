@@ -17,7 +17,6 @@ use agencyleroy\rssfeeds\models\RssFeedsModel;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
-use craft\helpers\Db;
 use yii\db\Schema;
 use craft\helpers\Json;
 
@@ -93,7 +92,7 @@ class SocialFeed extends Field
      * appended as well.
      * @see \yii\db\QueryBuilder::getColumnType()
      */
-    public function getContentColumnType(): string
+    public static function dbType(): array|string|null
     {
         return Schema::TYPE_STRING;
     }
